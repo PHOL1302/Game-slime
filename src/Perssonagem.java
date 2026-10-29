@@ -1,45 +1,46 @@
-public abstract class Perssonagem {
+public abstract class Perssonagem implements Acoes {
 
-    private String name;
-    private double vida;
-    private int nivel = 0;
+    protected String name;
+    protected double life;
+    protected double vidaMaxima;
+    protected int nivel;
+
+    public Perssonagem(String name, double life, int nivel) {
+        this.name = name;
+        this.life = life;
+        this.vidaMaxima = life;
+        this.nivel = nivel;
+    }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public double getVida() {
-        return vida;
-    }
-
-    public void setVida(double vida) {
-        this.vida = vida;
+    public double getLife() {
+        return life;
     }
 
     public int getNivel() {
         return nivel;
     }
 
-    public void setNivel(int nivel) {
-        this.nivel = nivel;
+    public boolean estaVivo() {
+        return life > 0;
     }
 
-    public Perssonagem(String name, double vida, int nivel) {
-        this.name = name;
-        this.vida = vida;
-        this.nivel = nivel;
+    public void receberDano(double dano) {
+        life -= dano;
+        if (life < 0) {
+            life = 0;
+        }
+        System.out.println(name + " recebeu " + (int) dano + " de dano. Vida: " + (int) life);
     }
 
-
-    @Override
-    public String toString() {
-        return
-                "name='" + name + '\'' +
-                        "\n" + "vida=" + vida +
-               "\n" + "nivel=" + nivel ;
+    protected void recuperarVida(double quantidade) {
+        life += quantidade;
+        if (life > vidaMaxima) {
+            life = vidaMaxima;
+        }
+        System.out.println(name + " recuperou vida. Vida: " + (int) life);
     }
 }
